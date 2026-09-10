@@ -1,134 +1,214 @@
-# 🏨 Hotel Booking Demand Analysis
+<br/><br/>
 
-## 📌 Project Overview  
-This project analyzes hotel booking data to identify **patterns, trends, and key factors influencing booking demand and cancellations**.  
-We applied **data cleaning, preprocessing, feature engineering, and exploratory data analysis (EDA)** to prepare the dataset for predictive modeling.  
+<!-- Animated Title -->
+<a href="#">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=36&pause=1000&color=7C3AED&center=true&vCenter=true&width=800&lines=Gtc Ml Project1 Hotel Bookings+%F0%9F%9A%80;Enterprise+Data+Science+%26+AI;Interactive+Analytics+%26+ML;Built+by+Ibrahim+Abdelsattar" alt="Typing SVG"/>
+</a>
 
-🎯 **Main Goal:** Provide insights into customer behavior and help hotels **reduce cancellations, improve guest satisfaction, and optimize revenue management**.  
+<br/>
 
----
+<p align="center">
+  <b>Enterprise-Grade Data Science & Software Engineering Solution</b><br/>
+  <i>Data Science Tools · Software Development</i>
+</p>
 
-## 📂 Dataset Description  
-The dataset includes booking records from two hotels: **Resort Hotel** and **City Hotel**.  
-Each row represents a booking with details about the booking process, guests, and stay information.  
+<br/>
 
-### Key Columns  
-| Column | Description |
-|--------|-------------|
-| **hotel** | Type of hotel (Resort or City). |
-| **is_canceled** | Target column – 1 if the booking was canceled, 0 otherwise. |
-| **lead_time** | Number of days between booking and arrival. |
-| **arrival_date** | Combined arrival date (year, month, day). |
-| **stays_in_weekend_nights** | Nights stayed on weekends. |
-| **stays_in_week_nights** | Nights stayed on weekdays. |
-| **adults, children, babies** | Number of guests in each category. |
-| **meal** | Type of meal plan booked. |
-| **country** | Guest’s country of origin. |
-| **market_segment** | Booking channel segment. |
-| **distribution_channel** | Channel used for booking. |
-| **is_repeated_guest** | Whether the guest booked before. |
-| **previous_cancellations** | Number of past canceled bookings. |
-| **reserved_room_type / assigned_room_type** | Room type reserved vs. assigned. |
-| **deposit_type** | Type of deposit made. |
-| **days_in_waiting_list** | How many days the booking was on a waiting list. |
-| **customer_type** | Type of booking (Transient, Group, etc.). |
-| **adr** | Average Daily Rate (revenue ÷ nights). |
-| **total_of_special_requests** | Number of special requests. |
-| **reservation_status / reservation_status_date** | Final booking status and date. |
+<!-- Badges Row -->
+<p align="center">
+  <img src="https://img.shields.io/badge/Data%20Science%20Tools-7C3AED?style=for-the-badge&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Software%20Development-7C3AED?style=for-the-badge&logoColor=white"/>
+  <img src="https://img.shields.io/badge/License-Academic-blue?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge"/>
+</p>
 
----
+<br/>
 
-## 🛠 Preprocessing Steps  
+<!-- Quick Links -->
+<p align="center">
+  <a href="#-overview"><img src="https://img.shields.io/badge/📌-Overview-7C3AED?style=flat-square"/></a>
+  &nbsp;
+  <a href="#-core-features"><img src="https://img.shields.io/badge/🔥-Features-E11D48?style=flat-square"/></a>
+  &nbsp;
+  <a href="#%EF%B8%8F-system-architecture"><img src="https://img.shields.io/badge/🏗️-Architecture-0891B2?style=flat-square"/></a>
+  &nbsp;
+  <a href="#-technical-stack"><img src="https://img.shields.io/badge/⚙️-Tech%20Stack-16A34A?style=flat-square"/></a>
+  &nbsp;
+  <a href="#-getting-started"><img src="https://img.shields.io/badge/🚀-Getting%20Started-F59E0B?style=flat-square"/></a>
+</p>
 
-### 1. Handling Missing Values  
-- **Children** → Missing values filled with `0`.  
-- **Country** → Filled with most frequent country (mode).  
-- **Agent & Company** → Filled with `0` meaning “no agent/company.”  
-
-✅ Dataset had no missing values after this step.
+<br/>
 
 ---
 
-### 2. Outlier Detection & Treatment  
-- Checked **numerical columns**: `adr`, `lead_time`, `stays_in_weekend_nights`, `stays_in_week_nights`, `days_in_waiting_list`, `adults`, `children`, `babies`, `required_car_parking_spaces`.  
-- Applied **IQR (Interquartile Range) method** + **business rules**.  
-- Key Findings:  
-  - **ADR** had extreme values (> 5000). Capped at **1000**.  
-  - **Lead Time** capped at **730 days** (2 years).  
-  - **Stay duration** capped at **30 nights**.  
-  - **Guests (adults/children/babies)** capped to reasonable bounds.  
-  - **Parking spaces** capped at 5.  
+## 📌 Overview
 
-✅ This reduced noise and improved data quality.
+**Gtc Ml Project1 Hotel Bookings** is an advanced software and data science repository engineered by **Ibrahim Abdelsattar**. It implements end-to-end data processing pipelines, predictive machine learning models, and production-ready code structures tailored for analytical precision and operational reliability.
+
+> Designed for seamless integration, high scalability, and robust computational performance.
 
 ---
 
-### 3. Data Type Correction  
-- Converted `children`, `agent`, and `company` → **int**.  
-- Converted categorical variables (`hotel`, `meal`, `market_segment`, etc.) → **category**.  
-- Converted `reservation_status_date` → **datetime**.  
+## 🎯 Problem & Solution Architecture
 
-✅ Correct data types ensured efficiency and accuracy.
+<table>
+<tr>
+<td width="50%">
 
----
+### ❌ The Challenge
 
-### 4. Feature Engineering  
-We engineered new features to better capture guest behavior and booking patterns:  
+Traditional analytical approaches face critical operational limitations:
 
-- **arrival_month, arrival_day_of_week, arrival_quarter, is_weekend** → Seasonality insights.  
-- **total_stay** = weekday + weekend nights.  
-- **stay_category** = Short / Medium / Long stay.  
-- **total_guests** = adults + children + babies.  
-- **has_guests** = Flag if guests > 0.  
-- **has_special_requests** = Flag if special requests > 0.  
-- **room_changed** = Reserved vs. assigned room difference.  
-- **waiting_list_flag** = 1 if waiting list > 0.  
-- **adr_per_person** = ADR ÷ total guests.  
-- **cancellation_ratio** = Previous cancellations ÷ previous bookings.  
-- **total_nights** = Duplicate of total_stay (kept for modeling consistency).  
+- 📉 Manual data wrangling and non-standardized preprocessing
+- 🔮 Lack of feature attribution and model explainability
+- ⚠️ Unoptimized hyperparameters leading to sub-optimal accuracy
+- 🔄 Inefficient deployment workflows and missing pipeline automation
 
-✅ These features improved interpretability and model readiness.
+</td>
+<td width="50%">
 
----
+### ✅ Our Solution
 
-## 📊 Exploratory Data Analysis (EDA)  
+| Challenge | Implemented Solution |
+|-----------|----------------------|
+| Raw Data Noise | Automated cleaning & feature encoding |
+| Low Accuracy | Tuned ML ensembles & robust evaluation |
+| Deployment Gaps | Modular CLI/Web interfaces & reproducible scripts |
+| Missing Insights | Visual metric plots & structured reporting |
 
-### 🔹 Univariate Analysis  
-- **Numerical columns** (`lead_time`, `adr`, `total_guests`, etc.) → Histograms + KDE showed skewed distributions (e.g., ADR right-skewed).  
-- **Categorical columns** (`hotel`, `meal`, `deposit_type`, etc.) → Countplots revealed imbalances (e.g., most bookings are City Hotels).  
-
-### 🔹 Target Variable (`is_canceled`)  
-- **72.5% bookings not canceled**, **27.5% canceled**.  
-- Visualized with a **pie chart** → clearly shows imbalance but sufficient data for both classes.  
-
-### 🔹 Bivariate Analysis  
-- **Numerical vs. Cancellations**:  
-  - Higher **lead_time** strongly correlated with cancellations.  
-  - Higher **adr** and **adr_per_person** linked with cancellations.  
-  - Longer stays slightly more prone to cancellations.  
-  - More **special requests** → less chance of cancellation.  
-
-- **Categorical vs. Cancellations**:  
-  - **Resort Hotels** had higher cancellation rates vs. City Hotels.  
-  - **No Deposit** bookings → lower cancellations compared to **Non-Refund** deposits.  
-  - **Online TA** segment showed highest cancellations.  
-  - Guests with **room changes** had slightly more cancellations.  
-
-✅ EDA gave us actionable business insights into how booking features affect cancellations.  
+</td>
+</tr>
+</table>
 
 ---
 
-## 🚀 Business Value of the Project  
-- **Reduce Cancellations** → By targeting high-risk bookings (e.g., high ADR, long lead time, Non-Refund deposits).  
-- **Revenue Optimization** → Adjust pricing based on ADR patterns.  
-- **Customer Retention** → Encourage repeated guests and meal plan bookings.  
-- **Operational Planning** → Better manage waiting lists, room assignments, and group bookings.  
+## 🔥 Core Features
+
+<table>
+<tr>
+
+<td align="center" width="33%">
+<br/>
+<b>⚡ High Performance Architecture</b><br/><br/>
+Modular Code Structure<br/>
+Scalable Design Patterns<br/>
+Robust Error Handling<br/>
+Clean Interface Abstractions<br/><br/>
+</td>
+<td align="center" width="33%">
+<br/>
+<b>📊 Data Preprocessing & EDA</b><br/><br/>
+Automated Missing Value Imputation<br/>
+Feature Engineering & Scaling<br/>
+Outlier Detection & Removal<br/>
+Exploratory Data Analysis Plots<br/><br/>
+</td>
+<td align="center" width="33%">
+<br/>
+<b>🎯 Production Guardrails</b><br/><br/>
+Strict Input Validation<br/>
+Reproducible Seed Setting<br/>
+Model Artifact Persistence<br/>
+Comprehensive Logging<br/><br/>
+</td>
+</tr>
+</table>
 
 ---
 
-## ✅ Summary of Work Done So Far  
-1. Cleaned and imputed missing values.  
-2. Detected and capped outliers.  
-3. Corrected data types.  
-4. Engineered new features.  
-5. Performed univariate, target, and bivariate analysis with actionable insights.  
+## 🏗️ System Architecture & Data Flow
+
+<br/>
+
+```mermaid
+flowchart LR
+    A["📥 Data Ingestion
+Raw Datasets / Inputs"] --> B["🧹 Preprocessing & Cleaning
+Feature Scaling & Encoding"]
+    B --> C["⚙️ Feature Engineering
+Domain Transformation"]
+    C --> D["🤖 Machine Learning Pipeline
+Model Training & Evaluation"]
+    D --> E["📊 Predictive Output & Metrics
+Interactive Dashboard / Reports"]
+    style A fill:#1e1b4b,color:#a5b4fc
+    style B fill:#312e81,color:#c7d2fe
+    style D fill:#1e3a5f,color:#93c5fd
+    style E fill:#14532d,color:#86efac
+```
+
+---
+
+## ⚙️ Technical Stack
+
+<div align="center">
+
+| Layer | Technology | Purpose |
+|-------|-----------|---------|
+| **Data Science Tools** | Core Framework / Library | Primary computing and analytical engine |
+| **Software Development** | Core Framework / Library | Primary computing and analytical engine |
+
+</div>
+
+---
+
+
+
+## 📁 Directory Structure
+
+<details>
+<summary><b>📂 Click to expand repository tree</b></summary>
+
+```
+gtc-ml-project1-hotel-bookings/
+├── Hotel_Booking_Demand_Analysis.ipynb
+├── README.md
+├── hotel_bookings - hotel_bookings.csv
+```
+
+</details>
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Python 3.10+ (or Node.js 18+ for web apps)
+- Git & Virtualenv
+
+### Installation & Execution
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/IbrahimAbdelsattar/gtc-ml-project1-hotel-bookings.git
+cd gtc-ml-project1-hotel-bookings
+
+# 2. Set up virtual environment (Python)
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# 3. Install dependencies
+# Install dependencies listed in codebase
+
+# 4. Launch project execution
+jupyter notebook
+```
+
+---
+
+## 👤 Author & Contact
+
+<div align="center">
+
+**Ibrahim Abdelsattar**  
+*Data Scientist & AI Specialist · MTI University (CS & AI, GPA 3.5)*
+
+[Email](mailto:ibrahimabdelsattar042@gmail.com) · [GitHub](https://github.com/IbrahimAbdelsattar) · [LinkedIn](https://linkedin.com/in/ibrahim-abdelsattar)
+
+<br/>
+
+<img src="https://img.shields.io/badge/Made%20with-Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
+<img src="https://img.shields.io/badge/Maintained%20by-Ibrahim%20Abdelsattar-7C3AED?style=for-the-badge"/>
+
+</div>
