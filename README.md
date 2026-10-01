@@ -21,6 +21,30 @@ A GTC internship notebook exploring hotel booking data, preparing features, and 
 
 Replace the notebook's `/content/hotel_bookings - hotel_bookings.csv` path with the included local CSV. This checkout centers on analysis and preparation; it does not include a separate trained-model service or deployment app.
 
+## UML diagrams
+
+### Main workflow
+
+The committed notebook covers exploration and preparation through a train/test split. A trained cancellation model is not part of this workflow.
+
+```mermaid
+sequenceDiagram
+    participant Notebook as Hotel booking notebook
+    participant CSV as Booking dataset
+    participant EDA as Data exploration
+    participant Prep as Feature preparation
+    participant Split as sklearn train_test_split
+    Notebook->>CSV: Load booking records
+    CSV-->>Notebook: Tabular data
+    Notebook->>EDA: Inspect distributions and missing values
+    EDA-->>Notebook: Tables and plots
+    Notebook->>Prep: Prepare features and cancellation target
+    Prep-->>Notebook: Features and labels
+    Notebook->>Split: Create stratified train and test sets
+    Split-->>Notebook: Prepared partitions
+    Note over Notebook,Split: No trained classifier is committed here
+```
+
 ## Getting started
 
 ```bash
